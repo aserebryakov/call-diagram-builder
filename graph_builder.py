@@ -62,19 +62,31 @@ class GraphBuilder:
         return (len(re.findall(r'\s', line))/self.__indent_value)
 
     def WriteHeader(self):
-       self.__outfile.append('digraph stack {\n');
+        self.__outfile.append('digraph stack {\n');
 
     def WriteFooter(self):
-       self.__outfile.append('}');
+        self.__outfile.append('}');
 
     def AddNextNode(self, node):
-       self.__outfile.append(' -> ' + node)
+        self.__outfile.append(' -> ' + node)
 
     def AddFirstNode(self, node):
-       self.__outfile.append('    ' + node)
+        self.__outfile.append('    ' + node)
 
     def EndLine(self):
-       self.__outfile.append(';\n')
+        self.__outfile.append(';\n')
+
+    def AddBackTrace(self, stack, depth):
+        self.AddFirstNode(stack.pop())
+
+        for i in range(depth):
+            self.AddNextNode(stack.pop())
+
+        self.AddNextNode(stack[-1])
+        self.EndLine()
+
+        return stack;
+
 
     def Generate(self):
         lines = self.__infile.get_lines()
@@ -92,17 +104,20 @@ class GraphBuilder:
                 self.AddNextNode(stack[-1])
             elif indent < prev_indent:
                 self.EndLine()
-                stack.pop()
-                self.AddFirstNode(re.sub(r'\s*', '', line))
+                stack = self.AddBackTrace(stack, prev_indent - indent)
+                self.AddFirstNode(stack[-1])
+                stack.append(re.sub(r'\s*', '', line))
                 self.AddNextNode(stack[-1])
             else:
+                stack.pop()
                 self.EndLine()
-                self.AddFirstNode(re.sub(r'\s*', '', line))
+                self.AddFirstNode(stack[-1])
+                stack.append(re.sub(r'\s*', '', line))
                 self.AddNextNode(stack[-1])
 
             prev_indent = indent
 
-        if len(stack) > 0:
+        if len(stack) > 1:
              self.EndLine()
              self.AddFirstNode(stack.pop())
 
@@ -111,6 +126,4 @@ class GraphBuilder:
 
         self.EndLine();
         self.WriteFooter();
-
-
 
