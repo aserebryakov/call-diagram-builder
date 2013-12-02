@@ -1,4 +1,4 @@
-stack-graph-builder
+Call Graph Builder
 ===================
 
 The purpose of this script is to help in code revese engineering.
@@ -12,6 +12,10 @@ Requirements
 
 Example
 -------
+__Usage:__
+```
+python sgb.py <input file> <output file>
+```
 
 __Input file:__
 
