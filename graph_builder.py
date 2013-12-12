@@ -21,7 +21,7 @@ class GraphBuilder:
             raise IOError
 
     def GetIndent(self, line):
-        return (len(re.findall(r'\s', line))/self.__indent_value)
+        return (len(re.findall(r'\s', line))//self.__indent_value)
 
     def WriteHeader(self):
         self.__outfile.append('digraph stack {\n');
