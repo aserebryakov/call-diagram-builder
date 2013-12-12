@@ -1,2 +1,2 @@
-from infile import InFile
-from outfile import OutFile
+from FileLib.infile import InFile
+from FileLib.outfile import OutFile
