@@ -2,7 +2,7 @@ from FileLib import *
 import re
 
 class GraphBuilder:
-    """Class incapsulating building of the graph"""
+    """Class encapsulating building of the graph"""
     __infile = None
     __outfile = None
     __indent_value = 4
@@ -29,14 +29,14 @@ class GraphBuilder:
     def WriteFooter(self):
         self.__outfile.append('}');
 
-    def AddNextNode(self, node):
-        self.__outfile.append(' -> ' + node)
+    def EndLine(self):
+        self.__outfile.append(';\n')
 
     def AddFirstNode(self, node):
         self.__outfile.append('    ' + node)
 
-    def EndLine(self):
-        self.__outfile.append(';\n')
+    def AddNextNode(self, node):
+        self.__outfile.append(' -> ' + node)
 
     def AddBackTrace(self, stack, depth):
         self.AddFirstNode(stack.pop())
@@ -70,7 +70,8 @@ class GraphBuilder:
                 self.AddNextNode(stack[-1])
             elif indent < prev_indent:
                 self.EndLine()
-                stack = self.AddBackTrace(stack, prev_indent - indent)
+                for i in range(prev_indent - indent + 1):
+                    stack.pop()
                 self.AddFirstNode(stack[-1])
                 stack.append(node)
                 self.AddNextNode(stack[-1])
@@ -84,8 +85,6 @@ class GraphBuilder:
 
             prev_indent = indent
 
-        if len(stack) > 1:
-            self.AddBackTrace(stack, indent - 1)
-
+        self.EndLine()
         self.WriteFooter();
 
