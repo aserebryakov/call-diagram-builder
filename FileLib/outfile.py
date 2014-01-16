@@ -5,11 +5,11 @@ import sys
 
 class OutFile:
     """Output File class"""
-    name = None
-    descriptor = None
 
     def __init__(self, filename):
         """Constructor"""
+        self.name = None
+        self.descriptor = None
         self.name = filename
         try:
             self.descriptor = open(self.name, "w")

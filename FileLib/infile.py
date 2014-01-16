@@ -13,27 +13,27 @@ import sys
 
 
 class InFile:
-	"""InFile class"""
-	descriptor = None
-	content = None
-	lines = []
+    """InFile class"""
 
-	def __init__(self, filename):
-		"""Constructor"""
-		try:
-			self.descriptor = open(filename, "r")
-		except IOError as e:
-			print("I/O error {0}: {1}".format(e.errno, e.strerror))
-			raise IOError
+    def __init__(self, filename):
+        """Constructor"""
+        self.descriptor = None
+        self.content = None
+        self.lines = []
+        try:
+            self.descriptor = open(filename, "r")
+        except IOError as e:
+            print("I/O error {0}: {1}".format(e.errno, e.strerror))
+            raise IOError
 
-		self.content = self.descriptor.read()
-		self.lines = self.content.splitlines()
-		self.descriptor.close()
+        self.content = self.descriptor.read()
+        self.lines = self.content.splitlines()
+        self.descriptor.close()
 
-	def get_content(self):
-		"""Returns file content as one string"""
-		return self.content
+    def get_content(self):
+        """Returns file content as one string"""
+        return self.content
 
-	def get_lines(self):
-		"""Returns file content as a list of strings""" 
-		return self.lines
+    def get_lines(self):
+        """Returns file content as a list of strings""" 
+        return self.lines

@@ -3,11 +3,12 @@ import re
 
 class GraphBuilder:
     """Class encapsulating building of the graph"""
-    __infile = None
-    __outfile = None
-    __indent_value = 4
 
     def __init__(self, infile, outfile):
+        self.__infile = None
+        self.__outfile = None
+        self.__indent_value = 4
+
         try:
             self.__infile = InFile(infile)
         except IOError:
