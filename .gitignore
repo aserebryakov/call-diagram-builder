@@ -1,3 +1,14 @@
+# Script input and output
+*.txt
+*.gv
+
+# Vim for Windows backup files
+*~
+
+# dot output
+*.png
+
+# Python
 *.py[cod]
 
 # C extensions
