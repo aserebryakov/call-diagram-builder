@@ -18,7 +18,7 @@ class GraphNode:
 
     def Parse(self, line):
         self.label  = re.sub(r'\s*', '', line)
-        self.digest = hashlib.md5(self.label).hexdigest()
+        self.digest = 'node_' + hashlib.md5(self.label).hexdigest()
         self.indent = self.CalculateIndent(line)
          
     def GetIndent(self):
