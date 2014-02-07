@@ -1,5 +1,6 @@
-from FileLib import *
 import re
+from FileLib import *
+from graph_node import GraphNode
 
 class GraphBuilder:
     """Class encapsulating building of the graph"""
@@ -20,9 +21,6 @@ class GraphBuilder:
         except IOError:
             print('Can\'t open output file')
             raise IOError
-
-    def GetIndent(self, line):
-        return (len(re.findall(r'\s', line))//self.__indent_value)
 
     def WriteHeader(self):
         self.__outfile.append('digraph stack {\n');
@@ -50,39 +48,48 @@ class GraphBuilder:
 
         return stack;
 
-
-    def Generate(self):
-        lines = self.__infile.get_lines()
-        stack = [lines[0]]
-        prev_indent = 0
-
-        self.WriteHeader();
-        self.AddFirstNode(lines[0])
-
-        for line in lines[1:]:
+    def ParseNodes(self):
+        nodes = []
+        for line in self.__infile.get_lines():
             if (re.sub(r'\s+', '', line) == ''):
                 continue
+            nodes.append(GraphNode(line))
 
-            indent = self.GetIndent(line)
-            node = re.sub(r'\s*', '', line)
+        return nodes
+
+    def WriteDescriptions(self, nodes):
+        for node in nodes:
+            self.__outfile.append('    ' + node.GetDescription())
+
+    def Generate(self):
+        nodes = self.ParseNodes()
+        stack = [nodes[0]]
+        prev_indent = stack[0].GetIndent()
+
+        self.WriteHeader()
+        self.WriteDescriptions(nodes)
+        self.AddFirstNode(stack[0].GetDigest())
+
+        for node in nodes[1:]:
+            indent = node.GetIndent()
 
             if indent > prev_indent:
                 stack.append(node)
-                self.AddNextNode(stack[-1])
+                self.AddNextNode(stack[-1].GetDigest())
             elif indent < prev_indent:
                 self.EndLine()
                 for i in range(prev_indent - indent + 1):
                     stack.pop()
-                self.AddFirstNode(stack[-1])
+                self.AddFirstNode(stack[-1].GetDigest())
                 stack.append(node)
-                self.AddNextNode(stack[-1])
+                self.AddNextNode(stack[-1].GetDigest())
             else:
                 stack.pop()
-                self.AddNextNode(stack[-1])
+                self.AddNextNode(stack[-1].GetDigest())
                 self.EndLine()
-                self.AddFirstNode(stack[-1])
+                self.AddFirstNode(stack[-1].GetDigest())
                 stack.append(node)
-                self.AddNextNode(stack[-1])
+                self.AddNextNode(stack[-1].GetDigest())
 
             prev_indent = indent
 
