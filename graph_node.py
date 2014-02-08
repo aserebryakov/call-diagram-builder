@@ -9,7 +9,7 @@ class GraphNode:
 
     def __init__(self, line):
         self.label  = ''
-        self.digest = ''
+        self.node_id = ''
         self.indent = 0
         self.Parse(line)
 
@@ -18,16 +18,16 @@ class GraphNode:
 
     def Parse(self, line):
         self.label  = re.sub(r'\s*', '', line)
-        self.digest = 'node_' + hashlib.md5(self.label).hexdigest()
+        self.node_id = 'node_' + hashlib.md5(self.label).hexdigest()
         self.indent = self.CalculateIndent(line)
          
     def GetIndent(self):
         return self.indent
 
     def GetDescription(self):
-        description = self.digest + '[' + self.stylestring + ', label=' + self.label + '];\n'
+        description = self.node_id + '[' + self.stylestring + ', label=' + self.label + '];\n'
         return description 
 
-    def GetDigest(self):
-        return self.digest
+    def GetId(self):
+        return self.node_id
 

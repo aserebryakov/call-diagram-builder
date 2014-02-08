@@ -68,28 +68,28 @@ class GraphBuilder:
 
         self.WriteHeader()
         self.WriteDescriptions(nodes)
-        self.AddFirstNode(stack[0].GetDigest())
+        self.AddFirstNode(stack[0].GetId())
 
         for node in nodes[1:]:
             indent = node.GetIndent()
 
             if indent > prev_indent:
                 stack.append(node)
-                self.AddNextNode(stack[-1].GetDigest())
+                self.AddNextNode(stack[-1].GetId())
             elif indent < prev_indent:
                 self.EndLine()
                 for i in range(prev_indent - indent + 1):
                     stack.pop()
-                self.AddFirstNode(stack[-1].GetDigest())
+                self.AddFirstNode(stack[-1].GetId())
                 stack.append(node)
-                self.AddNextNode(stack[-1].GetDigest())
+                self.AddNextNode(stack[-1].GetId())
             else:
                 stack.pop()
-                self.AddNextNode(stack[-1].GetDigest())
+                self.AddNextNode(stack[-1].GetId())
                 self.EndLine()
-                self.AddFirstNode(stack[-1].GetDigest())
+                self.AddFirstNode(stack[-1].GetId())
                 stack.append(node)
-                self.AddNextNode(stack[-1].GetDigest())
+                self.AddNextNode(stack[-1].GetId())
 
             prev_indent = indent
 
