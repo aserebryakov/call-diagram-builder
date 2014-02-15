@@ -17,23 +17,24 @@ class InFile:
 
     def __init__(self, filename):
         """Constructor"""
-        self.descriptor = None
-        self.content = None
-        self.lines = []
+        self.__descriptor = None
+        self.__content = None
+        self.__lines = []
         try:
-            self.descriptor = open(filename, "r")
+            self.__descriptor = open(filename, "r")
         except IOError as e:
             print("I/O error {0}: {1}".format(e.errno, e.strerror))
             raise IOError
 
-        self.content = self.descriptor.read()
-        self.lines = self.content.splitlines()
-        self.descriptor.close()
+        self.__content = self.__descriptor.read()
+        self.__lines = self.__content.splitlines()
+        self.__descriptor.close()
 
-    def get_content(self):
-        """Returns file content as one string"""
-        return self.content
+    @property
+    def content(self):
+        return self.__content
 
-    def get_lines(self):
+    @property
+    def lines(self):
         """Returns file content as a list of strings""" 
-        return self.lines
+        return self.__lines
