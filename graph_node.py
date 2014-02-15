@@ -14,10 +14,16 @@ class GraphNode:
         self.__parse(line)
 
     def calculate_indent(self, line):
-        return (len(re.findall(r'\s', line))//self.indentlengh)
+        match = re.match(r'\s+', line)
+        indent = 0 
+
+        if match is not None:
+            indent = len(re.findall(r'\s', match.string))//self.indentlengh
+
+        return indent
 
     def __parse(self, line):
-        self.__label  = re.sub(r'\s*', '', line)
+        self.__label  = re.sub(r'\s*', '', line, 1)
         self.__node_id = 'node_' + hashlib.md5(self.__label).hexdigest()
         self.__indent = self.calculate_indent(line)
          
@@ -30,6 +36,6 @@ class GraphNode:
         return self.__indent
 
     def get_description(self):
-        description = self.__node_id + '[' + self.stylestring + ', label=' + self.__label + '];\n'
+        description = self.__node_id + '[' + self.stylestring + ', label="' + self.__label + '"];\n'
         return description 
 
