@@ -2,7 +2,7 @@ import sys
 from  graph_builder import GraphBuilder
 
 NAME = "stack-graph-builder"
-VERSION = "0.01"
+VERSION = "0.02"
 
 
 def main(argv):
