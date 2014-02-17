@@ -50,32 +50,31 @@ class GraphBuilder:
         for node in nodes:
             self.__outfile.append('    ' + node.get_description())
 
+    def init_stack(self):
+        node = GraphNode("root")
+        node._GraphNode__node_id = "root"
+        node._GraphNode__indent = -1
+        return [node]
+
     def generate(self):
         nodes = self.parse_nodes()
-        stack = [nodes[0]]
-        prev_indent = stack[0].indent
+        stack = self.init_stack()
+        prev_indent = -1
 
         self.write_header()
         self.write_descriptions(nodes)
-        self.add_first_node(stack[0].node_id)
+        self.add_first_node("root")
 
-        for node in nodes[1:]:
+        for node in nodes:
             indent = node.indent
 
             if indent > prev_indent:
                 stack.append(node)
                 self.add_next_node(stack[-1].node_id)
-            elif indent < prev_indent:
+            else:
                 self.end_line()
                 for i in range(prev_indent - indent + 1):
                     stack.pop()
-                self.add_first_node(stack[-1].node_id)
-                stack.append(node)
-                self.add_next_node(stack[-1].node_id)
-            else:
-                stack.pop()
-                self.add_next_node(stack[-1].node_id)
-                self.end_line()
                 self.add_first_node(stack[-1].node_id)
                 stack.append(node)
                 self.add_next_node(stack[-1].node_id)
