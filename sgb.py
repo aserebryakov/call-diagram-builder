@@ -21,16 +21,19 @@ def choose_binary():
 
 def render_graph(output_file):
     binary = choose_binary()
+    result = 1
 
     try:
-        image_name = re.sub(r'\..*', '.png', args.output_file)
-
-        result = subprocess.call([binary, '-Tpng', args.output_file, '-o', image_name])
+        image_name = re.sub(r'\..*', '.png', output_file)
+        result = subprocess.call([binary, output_file, '-Tpng', '-o', image_name])
 
         if(result == 0):
-            print('Grapgh is rendered to {0}'.format(image_name))
+            print('Graph is rendered to {0}'.format(image_name))
+
     except:
         print('ERROR: Can not run DOT. Please check your PATH')
+
+    return result
 
 
 def main(args):
