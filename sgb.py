@@ -52,7 +52,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('input_file', help = 'input file name')
     parser.add_argument('output_file', help = 'output file name')
-    parser.add_argument('--render', help = 'call \'dot\' to render graph after generation', \
+    parser.add_argument('-r', '--render', help = 'call DOT to render graph after generation', \
                         action = 'store_true')
 
     args = parser.parse_args()
