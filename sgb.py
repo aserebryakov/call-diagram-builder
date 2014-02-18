@@ -13,7 +13,6 @@ def render_graph(output_file):
     try:
         image_name = re.sub(r'\..*', '.png', output_file)
         args = ['dot', output_file, '-Tpng', '-o', image_name]
-        print(args)
         result = subprocess.call(args)
 
         if(result == 0):
