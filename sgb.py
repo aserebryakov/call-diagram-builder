@@ -7,25 +7,14 @@ from  graph_builder import GraphBuilder
 NAME = 'stack-graph-builder'
 VERSION = '0.02'
 
-
-def choose_binary():
-    binary = ''
-
-    if ('win' in sys.platform):
-        binary = 'dot.exe'
-    else:
-        binary = 'dot'
-
-    return binary
-
-
 def render_graph(output_file):
-    binary = choose_binary()
     result = 1
 
     try:
         image_name = re.sub(r'\..*', '.png', output_file)
-        result = subprocess.call([binary, output_file, '-Tpng', '-o', image_name])
+        args = ['dot', output_file, '-Tpng', '-o', image_name]
+        print(args)
+        result = subprocess.call(args)
 
         if(result == 0):
             print('Graph is rendered to {0}'.format(image_name))
