@@ -36,6 +36,6 @@ class GraphNode:
         return self.__indent
 
     def get_description(self):
-        description = self.__node_id + '[' + self.stylestring + ', label="' + self.__label + '"];\n'
+        description = '{0}[{1}, label="{2}"];\n'.format(self.__node_id, self.stylestring, self.__label)
         return description
 

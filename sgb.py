@@ -19,7 +19,7 @@ def render_graph(output_file):
             print('Graph is rendered to {0}'.format(image_name))
 
     except:
-        print('ERROR: Can not run DOT. Please check your PATH')
+        print('ERROR: Cannot run DOT. Please check your PATH')
 
     return result
 

@@ -48,7 +48,7 @@ class GraphBuilder:
 
     def write_descriptions(self, nodes):
         for node in nodes:
-            self.__outfile.append('    ' + node.get_description())
+            self.__outfile.append('    {0}'.format(node.get_description()))
 
     def init_stack(self):
         node = GraphNode("root")
