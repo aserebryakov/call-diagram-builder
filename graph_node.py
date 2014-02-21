@@ -24,7 +24,7 @@ class GraphNode:
 
     def __parse(self, line):
         self.__label  = re.sub(r'\s*', '', line, 1)
-        self.__node_id = 'node_{0}'.format(hashlib.md5(self.__label).hexdigest())
+        self.__node_id = 'node_{0}'.format(hashlib.md5(self.__label.encode('utf-8')).hexdigest())
         self.__indent = self.calculate_indent(line)
 
     @property
