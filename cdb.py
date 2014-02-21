@@ -4,7 +4,7 @@ import re
 import subprocess
 from  graph_builder import GraphBuilder
 
-NAME = 'stack-graph-builder'
+NAME = 'call-diagram-builder'
 VERSION = '0.02'
 
 def render_graph(output_file):
